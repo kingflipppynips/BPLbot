@@ -48,12 +48,19 @@ client.on("message", message => {
     if(message.content.indexOf(config.prefix) !== 0)
         return;
 
+    // get the channel
+    const channel = message.channel;
+    
     // parse into command and arguments
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-
+    
     Object.keys(modules).forEach( function(moduleName) {
         var module = modules[moduleName];
+
+        if( module.channelFilter && !module.channelFilter(channel) )
+            return;
+
         if( module.onMessage ) {
             module.onMessage(client, message, command, args);
         }
