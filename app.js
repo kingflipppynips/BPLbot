@@ -55,8 +55,7 @@ client.on("message", message => {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     
-    Object.keys(modules).forEach( function(moduleName) {
-        var module = modules[moduleName];
+    Object.values(modules).forEach( function(module) {
 
         if( module.channelFilter && !module.channelFilter(channel) )
             return;
