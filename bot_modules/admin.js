@@ -5,9 +5,9 @@ module.exports = {
         return true;
     },
 
-     onMessage: async function(client, message, command, args) {
+     onCommand: async function(client, message, command, args) {
          
-        if(!message.member.roles.some(r=>["Admin"].includes(r.name)) )
+        if(!message.member.roles.some(r=>["Moderator"].includes(r.name)) )
             return;
 
         if( command == "say" ) {

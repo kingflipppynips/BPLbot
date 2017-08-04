@@ -44,26 +44,39 @@ client.on("message", message => {
     if(message.author.bot)
         return;
 
-    // check for command prefix
-    if(message.content.indexOf(config.prefix) !== 0)
-        return;
-
     // get the channel
     const channel = message.channel;
-    
-    // parse into command and arguments
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-    
-    Object.values(modules).forEach( function(module) {
+        
+    // check for command prefix
+    if(message.content.indexOf(config.prefix) !== 0) {
 
-        if( module.channelFilter && !module.channelFilter(channel) )
-            return;
+        // just a message
+        Object.values(modules).forEach( function(module) {
 
-        if( module.onMessage ) {
-            module.onMessage(client, message, command, args);
-        }
-    });
+            if( module.channelFilter && !module.channelFilter(channel) )
+                return;
+
+            if( module.onMessage ) {
+                module.onMessage(client, message);
+            }
+        });
+
+    } else {
+
+        // parse into command and arguments
+        const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+        const command = args.shift().toLowerCase();
+        
+        Object.values(modules).forEach( function(module) {
+
+            if( module.channelFilter && !module.channelFilter(channel) )
+                return;
+
+            if( module.onCommand ) {
+                module.onCommand(client, message, command, args);
+            }
+        });
+    }
 });
 
 client.login(secret.token);

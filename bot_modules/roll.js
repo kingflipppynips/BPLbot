@@ -2,7 +2,7 @@ const Roll = require('roll');
 const regex_roll = /(\d*d\d+([\+\-\*\/]\d+)?)/gi
 var roll = new Roll();
 
-const allowed_channels = ["bot-sandbox"];
+const allowed_channels = ["bot-testing-mods-only", "pen_and_paper"];
 
 module.exports = {
 
@@ -11,13 +11,14 @@ module.exports = {
         return allowed_channels.includes(channel.name);
     },
 
-     onMessage: async function(client, message, command, args) {
+     onCommand: async function(client, message, command, args) {
          if( command == "roll" ) {
-            var result = message.content.slice(command.length).replace(regex_roll, function(match) {
+            const origin = message.content.slice(command.length+2);
+            var result = origin.replace(regex_roll, function(match) {
                 return roll.roll( match ).result;
             });         
             message.delete().catch(x=>{}); 
-            message.channel.send(`${message.author} rolled: ${result}`);
+            message.channel.send(`${message.author} rolled: ${result} (${origin})`);
          }
     }
 };

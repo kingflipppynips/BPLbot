@@ -7,7 +7,7 @@ module.exports = {
         return true;
     },
 	
-	onMessage: async function(client, message, command, args) {
+	onCommand: async function(client, message, command, args) {
 		// get the role object fron the name in the config
 		let memberRole = message.guild.roles.find("name", config.memberRole);
 
