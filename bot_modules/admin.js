@@ -28,7 +28,7 @@ module.exports = {
 
                 if( user && timeout && !isNaN(timeout) ) {
                     message.delete().catch(x=>{});
-                    const m = await message.channel.send(`${message.author} muted ${user} for ${timeout} seconds. ${reason}`);
+                    const m = await message.channel.send(`${message.author} muted ${user} for ${timeout} minute(s). ${reason}`);
                     user.setMute( true );
                     mutes.set(user.id, m);
 
@@ -38,15 +38,15 @@ module.exports = {
                                 user.setMute( false );
                                 mutes.delete(user.id);
                             }
-                            m.edit(`${timeout} second mute on ${user} set by ${message.author} has expired. ${reason}`);
+                            m.edit(`${timeout} minute mute on ${user} set by ${message.author} has expired. ${reason}`);
                         }
-                    }, timeout * 1000);
+                    }, timeout * 60000);
                         
                 } else showUsage = true;
             } else showUsage = true;
             
             if(showUsage) {
-                message.channel.send(`${message.author} Usage: mute \@user seconds [reason]`);        
+                message.channel.send(`${message.author} Usage: mute \@user minutes [reason]`);        
             }
         }
 
