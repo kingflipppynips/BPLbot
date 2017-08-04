@@ -1,3 +1,5 @@
+const mutes = new Set();
+
 module.exports = {
 
     // return true if we handle channel
@@ -10,20 +12,37 @@ module.exports = {
         if(!message.member.roles.some(r=>["Moderator"].includes(r.name)) )
             return;
 
-        if( command == "say" ) {
+        if( command === "say" ) {
             const sayMessage = args.join(" ");
             message.delete().catch(x=>{}); 
             message.channel.send(sayMessage);
         }
+        
+        else if(command === "mute") {
+            var showUsage = false;
 
-        if(command === "purge") {
-            const deleteCount = parseInt(args[0], 10);
+            if( args.length == 2 && message.mentions.users.size == 1) {
+                const user = message.guild.member(message.mentions.users.first());
+                const timeout = parseInt( args[1] )
 
-            if(!deleteCount || deleteCount < 2 || deleteCount > 100)
-            return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
+                if( user && timeout && !isNaN(timeout) ) {
+                    message.delete().catch(x=>{});
+                    const m = await message.channel.send(`${message.author} muted ${user} for ${timeout} seconds`);
+                    user.setMute( true );
 
-            const fetched = await message.channel.fetchMessages({count: deleteCount});
-            message.channel.bulkDelete(fetched).catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
+                    setTimeout(function() {
+                        console.log(`Unmuting ${user}`);
+                        user.setMute( false );
+
+                        m.edit(`Mute on ${user} set by ${message.author} has expired.`);
+                    }, timeout * 1000);
+                        
+                } else showUsage = true;
+            } else showUsage = true;
+            
+            if(showUsage) {
+                message.channel.send(`${message.author} Usage: mute \@user seconds`);        
+            }
         }
     }
 };
