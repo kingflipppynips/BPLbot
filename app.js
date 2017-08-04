@@ -79,5 +79,14 @@ client.on("message", message => {
     }
 });
 
+client.on("voiceStateUpdate", function(oldMember, newMember) {
+
+    Object.values(modules).forEach( function(module) {
+        if( module.voiceStateUpdate ) {
+            module.voiceStateUpdate(client, oldMember, newMember);
+        }
+    });
+});
+
 client.login(secret.token);
            
