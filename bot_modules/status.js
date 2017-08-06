@@ -17,13 +17,13 @@ module.exports = {
 			return;
 
 		if (command === "status") {
-      var statusMsg = "";
+			var statusMsg = "";
 			Object.values(statusModules).forEach(function(module) {
 				if (module.getStatus) {
 					statusMsg += module.getStatus() + "\n";
 				}
 			});
-      message.channel.send("```" + statusMsg + "```");
+			message.channel.send(statusMsg);
 		}
 	}
 }
