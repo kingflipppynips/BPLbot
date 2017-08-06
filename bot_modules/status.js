@@ -17,13 +17,26 @@ module.exports = {
 			return;
 
 		if (command === "status") {
-			var statusMsg = "";
-			Object.values(statusModules).forEach(function(module) {
+			var statusFields = [];
+			Object.keys(statusModules).forEach(function(moduleName) {
+				var module = statusModules[moduleName];
 				if (module.getStatus) {
-					statusMsg += module.getStatus() + "\n";
+					statusFields.push({ name: "Module: " + moduleName, value: module.getStatus() });
 				}
 			});
-			message.channel.send(statusMsg);
+
+			//console.log(statusFields);
+			message.channel.send({
+				embed: {
+					color: 14365793,
+					author: {
+						name: "Bot Status",
+						icon_url: client.user.avatarURL
+          },
+					description: "Here's the sitrep broken down",
+					fields: statusFields
+				}
+			});
 		}
 	}
 }
