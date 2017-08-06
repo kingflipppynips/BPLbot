@@ -70,7 +70,7 @@ feeder.on('new-item', function(item) { //emits whenever theres a new item.
       continue;
 
     if( sub.youtube == channel_id && channels.has(sub.channel) ) {
-      channels.get(sub.channel).send(`:video_camera: | **${item.author}** uploaded **${item.title}**!\nVist: ${item.link}`).catch( x => console.error(x) );
+      channels.get(sub.channel).send(`:video_camera: | **${item.author}** uploaded **${item.title}**!\nVisit: ${item.link}`).catch( x => console.error(x) );
     }
   }
 });
