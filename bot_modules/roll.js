@@ -1,5 +1,5 @@
 const Roll = require('roll');
-const regex_roll = /(\d*d\d+([\+\-\*\/]\d+)?)/gi
+const regex_roll = /([0-9]{0,3}d\d+([\+\-\*\/]\d+)?)/gi
 var roll = new Roll();
 
 const allowed_channels = ["bot-testing-mods-only", "pen_and_paper"];
