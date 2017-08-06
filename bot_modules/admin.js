@@ -77,5 +77,20 @@ module.exports = {
         } else if(!newMember.serverMute && mutes.has(newMember.id)) {
             newMember.setMute( true );
         }
-    }
+    },
+
+    getStatus: function() {
+        var muteList = "";
+        if (mutes.size != 0) {
+        for (var muteItem of mutes.values()) {
+            if (muteList != "")
+                muteList += "\n";
+                muteList += muteItem;
+            }
+        } else {
+            muteList = "no mutes in progress.";
+        }
+
+        return (`Mutes: ${muteList}`);
+    }    
 };

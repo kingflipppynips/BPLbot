@@ -22,6 +22,10 @@ var loadModules = function() {
             console.log("Loaded " + file);
         }
     }
+
+    if (modules['status'])
+        modules['status'].setStatusModules(modules);
+
     console.log("Finished Loading Modules")
 }
 
