@@ -91,6 +91,6 @@ module.exports = {
 		var channel_list = [...enabled_channels];
 		if (channel_list.length == 0)
 			channel_list = "no channels";
-		return (`Butting in ${channel_list} at ${probability}% prob with emag state ${emag}`);
+		return (`Butting in **${channel_list}** with a **${probability}%** chance and emag state **${emag}**`);
 	}
 };

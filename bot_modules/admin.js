@@ -88,7 +88,7 @@ module.exports = {
                 muteList += muteItem;
             }
         } else {
-            muteList = "no mutes in progress.";
+            muteList = "none in progress.";
         }
 
         return (`Mutes: ${muteList}`);
