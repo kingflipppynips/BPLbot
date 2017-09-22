@@ -30,7 +30,7 @@ module.exports = {
 
     onCommand: async function(client, message, command, args) {
 
-        if(!message.member.roles.some(r=>["Moderator"].includes(r.name)) )
+        if(!message.member.roles.some(r=>["TRIBVNVS"].includes(r.name)) )
             return;
 
         const channel = message.channel;
